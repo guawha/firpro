@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .img {
+            width: 50px;
+            height: 50px;
+            background-image: url("goat.gif");
+            background-size: cover;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="img">
+
+    </div>
+</body>
+<script>
+var img = document.querySelector('.img')
+// 定义小图片的旋转角度
+var deg = 0
+// 定义小图片位于网页左侧位置
+var imgx=0
+// 定义小图片位于网页顶部位置
+var imgy=0
+// 定义小图片X轴的位置
+var imgl = 0
+// 小图片y轴的位置
+var imgt=0;
+// 定义小图片翻转的角度
+ var y= 0;
+//  定义一个计数器
+var index=0 ;
+// 鼠标移动函数
+window.addEventListener('mousemove',function(xyz){
+    // 获取网页左侧距离的图片的位置 
+    // clientWidth表示元素内部的宽度
+    imgx = xyz.x - img.offsetLeft - img.clientWidth/2;
+    // 获取网页的顶部距离的图片的位置
+    imgy = xyz.y - img.offsetTop - img.clientHeight/2;
+    // 套入公式，定义图片的旋转角度
+    deg = 360*Math.atan(imgy/imgx)/(2*Math.PI)
+// 每当鼠标移动的时候，重置index值
+ index = 0;
+//   定义当前鼠标的位置
+ var x= event.clientX
+//  当鼠标在突变右边时（X>offsetleft），图片需要翻转过来，否则不用
+if(img.offsetLeft<x){
+    y=-180
+}else{
+    y=0
+}
+})
+setInterval(()=>{
+    // 设置图片的旋转个翻转
+    img.style.transform = "rotateZ("+deg+"deg) rotateY("+y+"deg)"
+    index++
+    // 在这里设置小图片的位置和速度，并判断小图片到达鼠标位置时停下移动
+    if(index<50){
+        imgl+=imgx/50
+        imgt+=imgy/50
+    }
+    img.style.left = imgl+"px"
+    img.style.top = imgt+"px"
+},10)
+
+</script>
+
+</html>
